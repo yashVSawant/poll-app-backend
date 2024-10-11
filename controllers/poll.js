@@ -26,12 +26,8 @@ exports.getPoll = asyncErrorHandler(async(req,res)=>{
 })
 
 exports.getUserPolls = asyncErrorHandler(async(req,res)=>{ 
-    const polls = await Poll.find({userId:req.user._id}).select(["question"]).sort({createdAt:-1}).limit(10);  
-    res.status(200).json({success:true ,polls:polls});
-});
-
-exports.getUserVotedPolls = asyncErrorHandler(async(req,res)=>{
+    const created = await Poll.find({userId:req.user._id}).select(["question"]).sort({createdAt:-1}).limit(10); 
     const votes = await Vote.find({ userId :req.user._id }).populate('pollId' ,'question');// Extract the populated polls
-    const polls = votes.map(vote => vote.pollId);
-    res.status(200).json({success:true ,polls:polls});
-})
+    const voted = votes.map(vote => vote.pollId); 
+    res.status(200).json({success:true ,created , voted});
+});
