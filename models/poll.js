@@ -5,9 +5,10 @@ const pollSchema = new Schema({
   question: { type: String, required: true },
   options: [{ type: String, required: true }],
   votes: [{ type: Number, required: true }],
-  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }] //refer to comments
+  userId: { type: Schema.Types.ObjectId, ref: 'user' } //refer to comments
+},{
+    timestamps: true  //Automatically adding timestamps
 });
 
-const Poll = mongoose.model('Poll', pollSchema);
-module.exports = Poll;
+module.exports = mongoose.model('poll', pollSchema);
 

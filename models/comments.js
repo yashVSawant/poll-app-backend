@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema({
-    poll: { type: Schema.Types.ObjectId, ref: 'Poll', required: true }, //Reference to the poll
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },  //Reference to the user
+    pollId: { type: Schema.Types.ObjectId, ref: 'poll' }, //Reference to the poll
+    userId: { type: Schema.Types.ObjectId, ref: 'user', required: true },  //Reference to the user
     text: { type: String, required: true },  //comment text
-    replies: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]  //replies 
+    replies: [{ type: Schema.Types.ObjectId, ref: 'comment' }]  //replies 
 }, {
     timestamps: true  //Automatically adding timestamps
 });
   
-const Comment = mongoose.model('Comment', commentSchema);
-module.exports = Comment;
+module.exports = mongoose.model('comment', commentSchema);
   
